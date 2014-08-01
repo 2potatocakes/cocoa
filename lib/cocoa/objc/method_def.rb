@@ -187,6 +187,10 @@ module ObjC
           [:pointer,nil]
         when Symbol
           [:pointer,ObjC.sel_registerName("#{value}:")]
+        when Array
+          array = Cocoa::NSMutableArray.array.autorelease
+          value.each {|val| array.addObject val }
+          [:pointer, array ]
         when Cocoa::NSObject
           [:pointer,value.object]
         when FFI::Struct
